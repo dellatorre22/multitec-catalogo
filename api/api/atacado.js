@@ -12,7 +12,7 @@ module.exports = function(req, res) {
 
     try {
         // 3. Lê o arquivo secreto lá da raiz do projeto
-        const caminhoArquivo = path.join(process.cwd(), 'atacado.csv');
+       const caminhoArquivo = path.join(__dirname, 'atacado.csv');
         const conteudo = fs.readFileSync(caminhoArquivo, 'utf8');
 
         // 4. Converte o CSV e devolve para o site

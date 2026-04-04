@@ -1,16 +1,15 @@
-const urlPlanilha = "estoque.csv";
-const arquivoAtacado = "atacado_x7f9.csv";
+// Coloque aqui o link do seu Google Sheets publicado em CSV ou deixe estoque.csv se for local
+const urlPlanilha = "estoque.csv"; 
 
 const containerProdutos = document.querySelector('.products-container');
 const campoBusca = document.querySelector('.search-input');
 const containerCategorias = document.getElementById('box-categorias');
-const toggleAtacado = document.getElementById('toggle-atacado');
 
 let produtosMultitec = []; 
 let categoriaAtual = 'Todos'; 
 
-const SENHA_ATACADO = "multitec2026";
-let modoAtacadoAtivo = false;
+// Variável para não travar o atacado enquanto não mexemos nele
+let modoAtacadoAtivo = false; 
 let precosAtacado = {};
 
 function removerAcentos(texto) {
@@ -74,10 +73,6 @@ function renderizarProdutos(lista) {
         
         let precoDisplay = (produto.preco && produto.preco.trim() !== "") ? produto.preco : "Consultar Valor";
         
-        if (modoAtacadoAtivo && precosAtacado[produto.codigo]) {
-            precoDisplay = precosAtacado[produto.codigo] + " (Atacado)";
-        }
-        
         const quantidadeEstoque = parseInt(produto.estoque) || 0;
         let estiloEstoque = "";
         let textoEstoque = "";
@@ -93,7 +88,25 @@ function renderizarProdutos(lista) {
             estiloEstoque = "color: #D31212;"; 
         }
 
+        // =========================================
+        // LÓGICA DA FOTO DIRETA / AGUARDE
+        // =========================================
+        let imagemHtml = '';
+        
+        // Se tem algo escrito na coluna 'imagem' no Google Sheets...
+        if (produto.imagem && produto.imagem.trim() !== "") {
+            imagemHtml = `<img src="${produto.imagem}" alt="${produto.nome}" class="product-image" onerror="this.src='logo-multitec.png'">`;
+        } else {
+            // Se a célula estiver vazia...
+            imagemHtml = `
+                <div class="aguarde-placeholder">
+                    <span class="aguarde-texto">📸<br>Aguarde...<br>Foto em breve</span>
+                </div>
+            `;
+        }
+
         card.innerHTML = `
+            ${imagemHtml}
             <span class="product-tag">${produto.tag || 'Geral'} (Cód: ${produto.codigo || '-'})</span>
             <h3 class="product-title">${produto.nome}</h3>
             <div class="product-price">${precoDisplay}</div>
@@ -105,29 +118,17 @@ function renderizarProdutos(lista) {
 
 campoBusca.addEventListener('input', aplicarFiltros);
 
-toggleAtacado.addEventListener('change', (evento) => {
-    if (evento.target.checked) {
-        const palpite = prompt("Área Restrita para Lojistas. Digite a senha de acesso:");
-        
-        // Bate na porta do servidor Vercel enviando a senha
-        fetch(`/api/atacado?senha=${palpite}`)
-            .then(resposta => {
-                if (!resposta.ok) throw new Error("Senha incorreta");
-                return resposta.json();
-            })
-            .then(dados => {
-                alert("Acesso liberado! Carregando tabela de preços de atacado...");
-                precosAtacado = dados;
-                modoAtacadoAtivo = true;
-                aplicarFiltros();
-            })
-            .catch(() => {
-                alert("Senha incorreta ou arquivo de atacado inexistente.");
-                evento.target.checked = false;
-                modoAtacadoAtivo = false;
-            });
-    } else {
-        modoAtacadoAtivo = false;
-        aplicarFiltros(); 
+// Dá a partida e lê a sua planilha CSV
+Papa.parse(urlPlanilha, {
+    download: true,
+    header: true,
+    delimiter: "", // Identifica automaticamente vírgula ou ponto-e-vírgula do Google Sheets
+    complete: function(resultados) {
+        produtosMultitec = resultados.data;
+        renderizarCategorias(produtosMultitec);
+        renderizarProdutos(produtosMultitec);
+    },
+    error: function() {
+        containerProdutos.innerHTML = '<p style="color: #D31212; text-align: center; width: 100%;"><b>Erro:</b> Planilha não encontrada.</p>';
     }
 });
