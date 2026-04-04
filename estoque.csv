@@ -163,14 +163,13 @@ codigo,nome,preco,tag,estoque,imagem
 2156,Adaptador Wireless TP-Link TL-WN781ND,"R$119,90",Redes,1,
 3598,Fone de Condução Óssea Geonav IPX8 (AER17BK),"R$499,90",Áudio,7,
 2773,Alicate de Aço Multifunções,"R$3,00",Ferramentas,3,
-2252,Apple AirPods 4,"R$1.499,00",Áudio,1,
-1228,Apple AirTag (1 Unidade),"R$349,90",Acessórios,2,
+1228,Apple AirTag (1 Unidade),"R$349,90",Acessórios,2,"fotos/airtag.png"
 1628,Cabo Apple Charge USB-C para USB-C 60W,"R$299,00",Acessórios,30,
 3883,Apple iPhone 17 256GB Branco,"R$5.080,00",Smartphones,1,
 3594,Apple iPhone 17 256GB Preto,"R$5.080,00",Smartphones,2,
-3221,Apple iPhone 17 Pro Max 256GB Laranja,"R$0,00",Smartphones,3,
-3047,Apple iPhone 17 Pro Max 256GB Silver,"R$0,00",Smartphones,1,
-3050,Apple iPhone 17 Pro 256GB Silver,"R$12.220,00",Smartphones,1,
+3221,Apple iPhone 17 Pro Max 256GB Laranja,"R$9.000,00",Smartphones,3,"fotos/iphone17promaxlaranja.png"
+3047,Apple iPhone 17 Pro Max 256GB Silver,"R$9.100,00",Smartphones,1,"fotos/iphonepromaxsilver.png"
+3050,Apple iPhone 17 Pro 256GB Silver,"R$8.300,00",Smartphones,1,"fotos/iphonepromaxsilver.png"
 2927,Apple Pencil 2ª Geração,"R$1.599,90",Acessórios,1,
 3864,Apresentador Wireless Kross KE-MP50,"R$189,00",Informática,8,
 2158,Apresentador Logitech R400 Laser Pointer,"R$299,90",Informática,8,
@@ -197,12 +196,11 @@ codigo,nome,preco,tag,estoque,imagem
 3956,Cabo Apple USB-C to Lightning 2m Branco,"R$ 379,90",Acessórios,2,
 3313,Cabo Áudio P2/P2 1m,"R$ 49,90",Áudio,2,
 1408,Cabo Charge Apple USB-C to USB-C 1m,"R$ 329,00",Acessórios,10,
-2252,Apple AirPods 4,"R$ 1.499,00",Áudio,1,
-1228,Apple AirTag (1 Unidade),"R$ 349,90",Acessórios,2,
+2252,Apple AirPods 4,"R$ 1.499,00",Áudio,1,"fotos/airpods4.png"
 3883,Apple iPhone 17 256GB Branco,"R$ 5.080,00",Smartphones,1,
 3594,Apple iPhone 17 256GB Preto,"R$ 5.080,00",Smartphones,2,
-3050,Apple iPhone 17 Pro 256GB Silver,"R$ 12.220,00",Smartphones,1,
-2927,Apple Pencil 2ª Geração,"R$ 1.599,90",Acessórios,1,
+3050,Apple iPhone 17 Pro 256GB Silver,"R$ 12.220,00",Smartphones,1,"fotos/iphonepromaxsilver.png"
+2927,Apple Pencil 2ª Geração,"R$ 1.599,90",Acessórios,1,"fotos/pencil2.png"
 3864,Apresentador Kross Wireless KE-MP50,"R$ 189,00",Informática,8,
 2158,Apresentador Logitech R400 Laser Pointer,"R$ 299,90",Informática,8,
 2967,Autotransformador 100VA Bivolt,"R$ 139,90",Energia,3,
@@ -212,8 +210,8 @@ codigo,nome,preco,tag,estoque,imagem
 3356,Cadeira Gamer BRX Impact Blue,"R$ 1.149,90",Informática,1,
 3269,Cadeira Gamer Prime-X V2 Preto/Azul,"R$ 999,90",Informática,4,
 3386,Caixa Amplificada Aiwa Party Box 100W,"R$ 1.299,90",Áudio,3,
-2026,Caixa Amplificada JBL Party Box 320 Branca,"R$ 3.999,90",Áudio,43,
-1442,Caixa Amplificada JBL Party Box 320 Preta,"R$ 4.299,90",Áudio,79,
+2026,Caixa Amplificada JBL Party Box 320 Branca,"R$ 3.999,90",Áudio,43,"fotos/jbl320branca.png"
+1442,Caixa Amplificada JBL Party Box 320 Preta,"R$ 4.299,90",Áudio,79,"fotos/jbl320.png"
 1227,Caixa Amplificada JBL Partybox Ultimate 1100W,"R$ 9.439,90",Áudio,17,
 3784,Caixa Bluetooth JBL Boombox 4 Branca,"R$ 3.799,00",Áudio,25,
 3567,Caixa Bluetooth JBL Boombox 4 Laranja,"R$ 3.549,00",Áudio,105,
@@ -852,9 +850,7 @@ codigo,nome,preco,tag,estoque,imagem
 1947,iPhone 15 Pro Max 256GB Natural 84% Seminovo,"R$ 6.329,00",Smartphones,1,
 2604,iPhone 16 Pro Max 256GB Branco Seminovo 94%,"R$ 7.975,00",Smartphones,1,
 2857,iPhone 17 Air 256GB Sky Blue,"R$ 9.599,00",Smartphones,1,
-3604,iPhone 17 Pro 256GB Silver,"R$ 10.799,00",Smartphones,2,
 3096,iPhone 17 Pro Max 1TB Azul,"R$ 16.399,00",Smartphones,1,
-2849,iPhone 17 Pro Max 256GB Laranja Cósmico,"R$ 11.499,00",Smartphones,2,
 3347,JBL 12SWMS350,"R$ 309,90",Áudio,1,
 3346,JBL 1TWMS80 Par,"R$ 389,90",Áudio,16,
 3352,JBL 4TRMS80 Par,"R$ 258,00",Áudio,4,
