@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multitec Distribuição - Busca de Produtos</title>
+    
+    <style>
+        /* =========================================
+           PALETA DE CORES E VARIÁVEIS
+           ========================================= */
+        :root {
+            --bg-body: #1A1A1A;
+            --bg-card: #2D2D2D;
+            --bg-input: #3D3D3D;
+            --text-primary: #E0E0E0;
+            --text-secondary: #A0A0A0;
+            --accent-red: #D31212;
+            --border-color: #404040;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* =========================================
+           CABEÇALHO E LOGO
+           ========================================= */
+        header {
+            background-color: var(--bg-card);
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 2px solid var(--accent-red);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { max-width: 250px; height: auto; }
+
+        /* =========================================
+           PAINEL DE CONTROLES (BUSCA E CATEGORIA)
+           ========================================= */
+        .controls-container {
+            max-width: 1200px;
+            margin: 30px auto 10px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Barra de Busca */
+        .search-wrapper { display: flex; gap: 10px; width: 100%; }
+        
+        .search-input {
+            flex: 1;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: #FFFFFF;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.3s;
+        }
+        .search-input:focus { border-color: var(--accent-red); }
+        .search-input::placeholder { color: var(--text-secondary); }
+
+        /* Botões Base */
+        .btn-style {
+            padding: 15px 25px;
+            font-size: 1rem;
+            background-color: #333;
+            color: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+        .btn-style:hover { background-color: var(--accent-red); border-color: var(--accent-red); }
+        
+        .search-btn { background-color: var(--accent-red); border-color: var(--accent-red); }
+        .search-btn:hover { background-color: #A01010; }
+
+        /* Linha de Ações */
+        .actions-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg-card);
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Botão Switch do Atacado */
+        .toggle-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #555;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px; width: 18px;
+            left: 4px; bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--accent-red); }
+        input:checked + .slider:before { transform: translateX(24px); }
+
+        /* =========================================
+           BARRA DESLIZANTE DE CATEGORIAS
+           ========================================= */
+        .categories-container {
+            display: none;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 0;
+            margin-top: 10px;
+            scrollbar-width: none;
+        }
+        .categories-container::-webkit-scrollbar { display: none; }
+        
+        .category-btn {
+            background-color: var(--bg-input);
+            color: white;
+            border: 1px solid var(--border-color);
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .category-btn.active, .category-btn:hover {
+            background-color: var(--accent-red);
+            border-color: var(--accent-red);
+        }
+
+        /* =========================================
+           GRID DE PRODUTOS
+           ========================================= */
+        .products-container {
+            max-width: 1200px;
+            margin: 20px auto 50px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .product-tag { font-size: 0.8rem; color: var(--accent-red); font-weight: bold; text-transform: uppercase; margin-bottom: 5px; }
+        .product-title { font-size: 1.2rem; color: #FFFFFF; margin-bottom: 15px; flex: 1; }
+        .product-price { font-size: 1.4rem; font-weight: bold; color: #FFFFFF; border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 10px; }
+        .product-stock { font-size: 0.9rem; color: #4CAF50; margin-top: 5px; font-weight: bold; }
+
+        /* =========================================
+           IMAGENS DOS PRODUTOS (DIRETAS E AGUARDE)
+           ========================================= */
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: contain; /* Faz a foto caber inteira */
+            border-radius: 8px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: var(--bg-input);
+            transition: transform 0.3s ease; /* Efeito suave */
+        }
+
+        /* Zoom sutil quando o cliente passa o mouse */
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        /* O Quadrado de "Aguarde" quando não tem foto */
+        .aguarde-placeholder {
+            width: 100%;
+            height: 200px;
+            background-color: var(--bg-input);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border: 2px dashed var(--border-color); /* Borda tracejada */
+        }
+
+        .aguarde-texto {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: bold;
+            line-height: 1.4;
+        }
+
+        /* Ajustes Mobile */
+        @media (max-width: 600px) {
+            .actions-row { flex-direction: column; gap: 15px; align-items: stretch; }
+            .toggle-wrapper { justify-content: space-between; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="logo-multitec.png" alt="Logo Multitec" class="logo">
+    </header>
+
+    <main>
+        <div class="controls-container">
+            
+            <div class="search-wrapper">
+                <input type="text" class="search-input" placeholder="Digite o nome, marca ou modelo...">
+                <button class="btn-style search-btn">Buscar</button>
+            </div>
+
+            <div class="actions-row">
+                <button id="btn-toggle-categorias" class="btn-style">Menu de Categorias ▼</button>
+                
+                <div class="toggle-wrapper">
+                    <span>Ativar Preços de Atacado</span>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle-atacado">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div id="box-categorias" class="categories-container"></div>
+        </div>
+
+        <div class="products-container"></div>
+            
+    </main>
+
+    <script>
+        const btnCategorias = document.getElementById('btn-toggle-categorias');
+        const boxCategorias = document.getElementById('box-categorias');
+
+        btnCategorias.addEventListener('click', () => {
+            if (boxCategorias.style.display === 'none' || boxCategorias.style.display === '') {
+                boxCategorias.style.display = 'flex';
+                btnCategorias.style.backgroundColor = '#D31212';
+                btnCategorias.style.borderColor = '#D31212';
+                btnCategorias.textContent = 'Esconder Categorias ▲';
+            } else {
+                boxCategorias.style.display = 'none';
+                btnCategorias.style.backgroundColor = '#333';
+                btnCategorias.style.borderColor = '#404040';
+                btnCategorias.textContent = 'Menu de Categorias ▼';
+            }
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="sistema.js"></script>
+
+</body>
+</html>
